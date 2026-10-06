@@ -97,7 +97,7 @@ pytest                             # runs unit tests
 |---|---|
 | Pietro Candiani | Tech leader (repo owner) |
 | Cesare Bavaresco | Communication leader |
-| Christina Yu / TBD | Design leader |
+| Christina Yu | Design leader |
 
 ## Contributing
 
