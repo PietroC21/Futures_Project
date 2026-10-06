@@ -1,0 +1,7 @@
+databento>=0.40
+pandas>=2.1
+numpy>=1.26
+scipy>=1.11
+pyarrow>=14.0
+matplotlib>=3.8
+pytest>=7.4
