@@ -1,9 +1,15 @@
 """Study-wide settings: dataset, products, strike range and paths."""
 
-from datetime import time
+from datetime import date, time
 from pathlib import Path
 
 DATASET = "GLBX.MDP3"
+
+# Sample of trading days (inside the window where `mbo` is also licensed).
+# Override without editing code: `python scripts/download.py --dates ...`.
+STUDY_DATES = [date(2026, 10, 7), date(2026, 10, 8), date(2026, 10, 9)]
+# Market-data schemas to download. `mbp-1` carries both BBO updates and trades.
+SCHEMAS = ["mbp-1"]
 
 # Exchange and study time zones. CME products are defined in Chicago time;
 # the cash session (and our reference times) are quoted in New York time.

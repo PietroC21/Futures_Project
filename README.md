@@ -109,7 +109,17 @@ pytest                             # runs unit tests
 
 **Expected output:** `download.py` leaves the raw Databento files in `data/raw/`. `run_study.py` writes cleaned parquet files to `data/processed/` and one figure or table per item in [Outputs](#outputs) to `results/`. The written report is `notebooks/results.ipynb`.
 
-**Data cost:** `download.py` prints the Databento cost estimate and asks for confirmation before downloading. Options data can be large; the default config keeps it to a small strike range and a few days.
+**Data cost:** `download.py` prints the Databento cost estimate and asks for confirmation before downloading. Options data can be large; the default config keeps it to a small strike range and a few days. Files already in `data/raw/` are never downloaded again.
+
+Download parameters can be changed without editing code:
+
+```bash
+python scripts/download.py --dry-run                  # cost estimate only
+python scripts/download.py --dates 2026-10-07 2026-10-08 --n-strikes 6
+python scripts/download.py --schemas mbp-1 mbo --yes  # skip the confirmation prompt
+```
+
+Defaults live in `src/stale_quotes/config.py`. Each file is stored as `data/raw/<schema>/<YYYYMMDD>/{futures,options}.dbn.zst`, next to a JSON manifest of the exact request.
 
 **Dates:** full-depth (`mbo`) data under the course license only covers roughly the last 1–2 months. Default dates in `config.py` will be set inside that window.
 
