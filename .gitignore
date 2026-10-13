@@ -218,3 +218,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Study data and outputs (see README: not committed)
+data/raw/
+data/processed/
+results/
