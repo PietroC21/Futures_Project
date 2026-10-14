@@ -145,6 +145,7 @@ Stages run in order because each needs the output of the one before. The two sta
 | Pietro Candiani | [@PietroC21](https://github.com/PietroC21) | Tech leader (repo owner) |
 | Cesare Bavaresco | [@cbav219](https://github.com/cbav219) | Communication leader |
 | Christina Yu | [@ChristinaY5577](https://github.com/ChristinaY5577) | Design leader |
+| Rajdeep Choudhury | [@RajdeepC98](https://github.com/RajdeepC98) | Design leader |
 
 ## Contributing
 
