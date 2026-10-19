@@ -1,0 +1,66 @@
+{
+  "input_records": 3299223,
+  "trade_records_ignored": 214265,
+  "same_timestamp_records_collapsed": 47,
+  "quote_states": 3084911,
+  "invalid_states": 0,
+  "missing_event_timestamps": 0,
+  "continuity_segments": 121,
+  "price_basis": "midpoint",
+  "settings": {
+    "price_basis": "midpoint",
+    "tick_size": 0.25,
+    "cluster_gap_ns": 250000,
+    "max_cluster_span_ns": 2000000,
+    "reaction_window_ns": 10000000,
+    "max_quote_gap_ns": 1000000000,
+    "drop_reversals": true,
+    "singleton_only": false,
+    "overlap_policy": "truncate"
+  },
+  "bbo_price_change_candidates": 150865,
+  "directional_candidates": 150865,
+  "clusters": 80291,
+  "selected_events": 64260,
+  "round_trip_clusters": 6717,
+  "reversal_clusters": 16028,
+  "excluded_clusters": 16031,
+  "time_unit": "ns",
+  "primary_event_definition": "single_price_update",
+  "primary_events": 44280,
+  "source": {
+    "kind": "market_data",
+    "path": "data/raw/mbp-1/20261009/futures.dbn.zst",
+    "manifest": {
+      "trading_date": "2026-10-09",
+      "kind": "futures",
+      "dataset": "GLBX.MDP3",
+      "schema": "mbp-1",
+      "stype_in": "instrument_id",
+      "symbols": [
+        10252
+      ],
+      "start": "2026-10-09 09:30:00-04:00",
+      "end": "2026-10-09 16:00:00-04:00",
+      "raw_symbols": [
+        "ESZ6"
+      ]
+    },
+    "input_sha256": "9f31d135f06c200d220da208b722fc7d0326e36c84abd6331582caab3a84489c"
+  },
+  "test_results": {
+    "passed": 68,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0
+  },
+  "versions": {
+    "pandas": "2.3.3",
+    "numpy": "2.4.6",
+    "databento": "0.87.0",
+    "pyarrow": "22.0.0",
+    "pytest": "9.1.1"
+  },
+  "python": "3.11.14",
+  "parquet_timestamp_roundtrip": "passed"
+}
