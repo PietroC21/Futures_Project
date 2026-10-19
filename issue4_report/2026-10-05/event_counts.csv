@@ -1,0 +1,7 @@
+sample,direction,size_class,events
+2026-10-05,down,multi_tick,47
+2026-10-05,down,single_tick,1168
+2026-10-05,down,sub_tick,22170
+2026-10-05,up,multi_tick,54
+2026-10-05,up,single_tick,1367
+2026-10-05,up,sub_tick,21877
