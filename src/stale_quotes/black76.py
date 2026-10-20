@@ -13,11 +13,22 @@ import math
 
 import pandas as pd
 from scipy.optimize import brentq
-from scipy.stats import norm
 
 MINUTES_PER_YEAR = 365 * 24 * 60
 SIGMA_MIN = 1e-6
 SIGMA_MAX = 10.0
+SQRT_2 = math.sqrt(2.0)
+INV_SQRT_2PI = 1.0 / math.sqrt(2.0 * math.pi)
+
+
+def _cdf(x):
+    """Standard normal CDF. Scalar math.erfc is ~700x faster than
+    scipy.stats._cdf per call, which dominated IV inversion time (#16)."""
+    return 0.5 * math.erfc(-x / SQRT_2)
+
+
+def _pdf(x):
+    return INV_SQRT_2PI * math.exp(-0.5 * x * x)
 
 
 def time_to_expiry(ts, expiry):
@@ -38,27 +49,27 @@ def price(F, K, T, sigma, is_call, r=0.0):
     df = math.exp(-r * T)
     d1, d2 = _d1_d2(F, K, T, sigma)
     if is_call:
-        return df * (F * norm.cdf(d1) - K * norm.cdf(d2))
-    return df * (K * norm.cdf(-d2) - F * norm.cdf(-d1))
+        return df * (F * _cdf(d1) - K * _cdf(d2))
+    return df * (K * _cdf(-d2) - F * _cdf(-d1))
 
 
 def delta(F, K, T, sigma, is_call, r=0.0):
     df = math.exp(-r * T)
     d1, _ = _d1_d2(F, K, T, sigma)
-    return df * norm.cdf(d1) if is_call else -df * norm.cdf(-d1)
+    return df * _cdf(d1) if is_call else -df * _cdf(-d1)
 
 
 def gamma(F, K, T, sigma, r=0.0):
     df = math.exp(-r * T)
     d1, _ = _d1_d2(F, K, T, sigma)
-    return df * norm.pdf(d1) / (F * sigma * math.sqrt(T))
+    return df * _pdf(d1) / (F * sigma * math.sqrt(T))
 
 
 def vega(F, K, T, sigma, r=0.0):
     """Price change per unit (1.00 = 100 vol points) change in sigma."""
     df = math.exp(-r * T)
     d1, _ = _d1_d2(F, K, T, sigma)
-    return df * F * norm.pdf(d1) * math.sqrt(T)
+    return df * F * _pdf(d1) * math.sqrt(T)
 
 
 def no_arbitrage_bounds(F, K, T, is_call, r=0.0):
