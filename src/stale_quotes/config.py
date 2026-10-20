@@ -37,6 +37,23 @@ ATM_REFERENCE_TIME = time(9, 30)  # STUDY_TZ, cash open
 RTH_START = time(9, 30)  # STUDY_TZ
 RTH_END = time(16, 0)  # STUDY_TZ
 
+# Stale-quote test (staleness.py). A quote is an opportunity only if it beats
+# fair value by more than COST = OPTION_TICK / 2 + FEE_PER_CONTRACT_USD / multiplier.
+#
+# Tick: ES weekly/0DTE options quote in 0.05 increments at every premium level
+# (checked on 2026-10-07 mbp-1 data; definitions only give tick_rule 17).
+OPTION_TICK = 0.05
+# Fees: one flat, all-in taker fee per contract (exchange + clearing; no
+# brokerage). Taking a stale quote always crosses the spread, so only the taker
+# side applies; maker rebates and CME volume/membership tiers are NOT modelled.
+# $1.00 is a round, conservative assumption to check against the CME fee schedule.
+FEE_PER_CONTRACT_USD = 1.00
+# Fair value adds the gamma term (PR #14 shows delta-only is off by more than
+# half a tick for 8+ tick moves late in the day).
+USE_GAMMA = True
+# Longest stale window tracked when events carry no `observation_end`.
+MAX_WINDOW_NS = 10_000_000  # 10 ms, the issue #4 observation horizon
+
 ROOT_DIR = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT_DIR / "data" / "raw"
 PROCESSED_DIR = ROOT_DIR / "data" / "processed"
