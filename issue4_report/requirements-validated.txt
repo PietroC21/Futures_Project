@@ -1,6 +1,0 @@
-# Python 3.11.14
-pandas==2.3.3
-numpy==2.4.6
-databento==0.87.0
-pyarrow==22.0.0
-pytest==9.1.1

@@ -1,5 +1,0 @@
-file,rows,MiB
-2026-10-06/candidates.parquet,141898,2.896
-2026-10-06/clusters.parquet,71466,7.34
-2026-10-06/clustered_events.parquet,55656,5.902
-2026-10-06/events.parquet,35990,3.783

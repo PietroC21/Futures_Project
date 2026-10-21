@@ -1,5 +1,0 @@
-sample,cluster_gap_ns,clustered_events,single_update_events,round_trip_clusters,reversal_clusters,sub_tick_events,single_tick_events,multi_tick_events,truncated_events,median_observation_duration_ns
-2026-10-09,0,150865,150865,0,0,146242,4515,108,114053,271786.0
-2026-10-09,100000,96697,82676,8335,14338,79806,2812,58,55359,527391.0
-2026-10-09,250000,64260,44280,6717,16028,42286,1942,52,25769,3662065.0
-2026-10-09,500000,39445,17946,9394,17814,16702,1198,46,6435,10000000.0
