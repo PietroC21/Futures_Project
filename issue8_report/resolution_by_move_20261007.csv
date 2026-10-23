@@ -1,0 +1,10 @@
+move_group,resolution_class,count
+single_tick,cancelled,37
+single_tick,filled,2
+single_tick,mixed,71
+single_tick,modified,197
+single_tick,unclassified,457
+multi_tick,cancelled,21
+multi_tick,filled,3
+multi_tick,mixed,11
+multi_tick,unclassified,29
