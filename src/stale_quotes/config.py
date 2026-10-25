@@ -1,59 +1,110 @@
-"""Study-wide settings: dataset, products, strike range and paths."""
+
+"""Study-wide settings for the ES 0DTE stale-quote project."""
 
 from datetime import date, time
 from pathlib import Path
 
+
+# ---------------------------------------------------------------------
+# Dataset and study dates
+# ---------------------------------------------------------------------
+
 DATASET = "GLBX.MDP3"
 
-# Sample of trading days (inside the window where `mbo` is also licensed).
-# Override without editing code: `python scripts/download.py --dates ...`.
-STUDY_DATES = [date(2026, 10, 5), date(2026, 10, 6), date(2026, 10, 7), date(2026, 10, 8), date(2026, 10, 9)]
-# Market-data schemas to download. `mbp-1` carries both BBO updates and trades.
+# Full trading week: Monday, October 5 through Friday, October 9, 2026.
+# Dates can also be overridden using scripts/download.py --dates.
+STUDY_DATES = [date(2026, 10, d) for d in range(5, 10)]
+
+# MBP-1 includes top-of-book updates and trades.
 SCHEMAS = ["mbp-1"]
 
-# Exchange and study time zones. CME products are defined in Chicago time;
-# the cash session (and our reference times) are quoted in New York time.
+
+# ---------------------------------------------------------------------
+# Trading sessions and time zones
+# ---------------------------------------------------------------------
+
 EXCHANGE_TZ = "America/Chicago"
 STUDY_TZ = "America/New_York"
 
-# ES futures parent symbol (outrights and calendar spreads).
+# Reference time used to select near-the-money option strikes.
+ATM_REFERENCE_TIME = time(9, 30)
+
+# Regular trading hours (New York time).
+RTH_START = time(9, 30)
+RTH_END = time(16, 0)
+
+
+# ---------------------------------------------------------------------
+# Futures and options instruments
+# ---------------------------------------------------------------------
+
+# ES futures parent symbol.
 ES_FUTURES_PARENT = "ES.FUT"
 
-# Option product roots that settle into ES futures. `ES.OPT` only covers the
-# AM-settled quarterly options; every weekly/daily expiry has its own root:
-#   EW          end-of-month (PM)
-#   EW1..EW4    Friday weeklies, week 1-4 of the month (EW3 = 3rd Friday, PM)
-#   E{1-5}{A-D} Monday (A), Tuesday (B), Wednesday (C), Thursday (D) weeklies
+# Option roots covering quarterly, weekly, and daily ES expirations.
 ES_OPTION_ROOTS = (
     ["ES", "EW", "EW1", "EW2", "EW3", "EW4"]
     + [f"E{week}{day}" for day in "ABCD" for week in range(1, 6)]
 )
 
-# Near-the-money strike selection.
+# Number of strikes selected around ATM.
 N_STRIKES = 10
-# Time at which the futures price is sampled to define at-the-money.
-ATM_REFERENCE_TIME = time(9, 30)  # STUDY_TZ, cash open
-# Regular trading hours used as the default market-data request window.
-RTH_START = time(9, 30)  # STUDY_TZ
-RTH_END = time(16, 0)  # STUDY_TZ
 
-# Stale-quote test (staleness.py). A quote is an opportunity only if it beats
-# fair value by more than COST = OPTION_TICK / 2 + FEE_PER_CONTRACT_USD / multiplier.
-#
-# Tick: ES weekly/0DTE options quote in 0.05 increments at every premium level
-# (checked on 2026-10-07 mbp-1 data; definitions only give tick_rule 17).
+
+# ---------------------------------------------------------------------
+# Issue #4: Futures event detection
+# ---------------------------------------------------------------------
+
+# ES minimum price increment, in index points.
+ES_FUTURES_TICK_SIZE = 0.25
+
+# Maximum gap between nearby midpoint changes for clustering.
+# 250 microseconds = 250,000 nanoseconds.
+CLUSTER_GAP_NS = 250_000
+
+# Maximum allowed span of a cluster.
+# 2 milliseconds = 2,000,000 nanoseconds.
+MAX_CLUSTER_SPAN_NS = 2_000_000
+
+# Maximum observation window following a futures event.
+# 10 milliseconds = 10,000,000 nanoseconds.
+REACTION_WINDOW_NS = 10_000_000
+
+# Maximum tolerated gap between consecutive quote observations.
+# 1 second = 1,000,000,000 nanoseconds.
+MAX_QUOTE_GAP_NS = 1_000_000_000
+
+
+# ---------------------------------------------------------------------
+# Issue #6: Stale-quote detection
+# ---------------------------------------------------------------------
+
+# ES weekly/0DTE option tick size, in premium points.
+# Verified against the 2026-10-07 mbp-1 sample.
 OPTION_TICK = 0.05
-# Fees: one flat, all-in taker fee per contract (exchange + clearing; no
-# brokerage). Taking a stale quote always crosses the spread, so only the taker
-# side applies; maker rebates and CME volume/membership tiers are NOT modelled.
-# $1.00 is a round, conservative assumption to check against the CME fee schedule.
+
+# Assumed all-in taker fee per contract (USD), excluding brokerage.
+# Maker rebates and volume/membership tiers are not modeled.
 FEE_PER_CONTRACT_USD = 1.00
-# Fair value adds the gamma term (PR #14 shows delta-only is off by more than
-# half a tick for 8+ tick moves late in the day).
+
+# Include the gamma term when updating option fair value.
 USE_GAMMA = True
-# Longest stale window tracked when events carry no `observation_end`.
-MAX_WINDOW_NS = 10_000_000  # 10 ms, the issue #4 observation horizon
+
+# Longest stale window when an event has no observation_end (10 ms).
+MAX_WINDOW_NS = 10_000_000
+
+
+# ---------------------------------------------------------------------
+# Local paths
+# ---------------------------------------------------------------------
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
+
 RAW_DIR = ROOT_DIR / "data" / "raw"
 PROCESSED_DIR = ROOT_DIR / "data" / "processed"
+
+# Generated event tables are kept outside Git.
+EVENTS_DIR = PROCESSED_DIR / "events"
+
+# Small summary files and documentation for Issue #4.
+ISSUE4_REPORT_DIR = ROOT_DIR / "issue4_report"

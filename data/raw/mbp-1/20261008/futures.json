@@ -1,0 +1,15 @@
+{
+  "trading_date": "2026-10-08",
+  "kind": "futures",
+  "dataset": "GLBX.MDP3",
+  "schema": "mbp-1",
+  "stype_in": "instrument_id",
+  "symbols": [
+    10252
+  ],
+  "start": "2026-10-08 09:30:00-04:00",
+  "end": "2026-10-08 16:00:00-04:00",
+  "raw_symbols": [
+    "ESZ6"
+  ]
+}
