@@ -76,6 +76,25 @@ MAX_QUOTE_GAP_NS = 1_000_000_000
 
 
 # ---------------------------------------------------------------------
+# Issue #6: Stale-quote detection
+# ---------------------------------------------------------------------
+
+# ES weekly/0DTE option tick size, in premium points.
+# Verified against the 2026-10-07 mbp-1 sample.
+OPTION_TICK = 0.05
+
+# Assumed all-in taker fee per contract (USD), excluding brokerage.
+# Maker rebates and volume/membership tiers are not modeled.
+FEE_PER_CONTRACT_USD = 1.00
+
+# Include the gamma term when updating option fair value.
+USE_GAMMA = True
+
+# Longest stale window when an event has no observation_end (10 ms).
+MAX_WINDOW_NS = 10_000_000
+
+
+# ---------------------------------------------------------------------
 # Local paths
 # ---------------------------------------------------------------------
 
