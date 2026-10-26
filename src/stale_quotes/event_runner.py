@@ -137,7 +137,7 @@ def main(argv=None):
         not args.no_unfiltered,
     )
     root = Path(__file__).resolve().parents[2]
-    folder = root / "issue4_report"
+    folder = root / "reports" / "issue4_report"
     folder.mkdir(exist_ok=True)
     summary.to_csv(folder / "event_counts.csv", index=False)
     print(summary.to_string(index=False))
