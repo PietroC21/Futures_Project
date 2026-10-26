@@ -1,0 +1,16 @@
+{
+  "trading_date": "2026-10-07",
+  "kind": "options",
+  "dataset": "GLBX.MDP3",
+  "schema": "mbo",
+  "symbols": [
+    43090066,
+    43090052,
+    42882745,
+    43012847
+  ],
+  "stype_in": "instrument_id",
+  "start": "2026-10-07T00:00:00+00:00",
+  "end": "2026-10-07T10:30:00-04:00",
+  "origin": "issue8_mbo_snapshot_sample"
+}
