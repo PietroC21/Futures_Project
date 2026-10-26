@@ -107,4 +107,4 @@ PROCESSED_DIR = ROOT_DIR / "data" / "processed"
 EVENTS_DIR = PROCESSED_DIR / "events"
 
 # Small summary files and documentation for Issue #4.
-ISSUE4_REPORT_DIR = ROOT_DIR / "issue4_report"
+ISSUE4_REPORT_DIR = ROOT_DIR / "reports" / "issue4_report"

@@ -67,7 +67,7 @@ def main(argv=None):
     out.mkdir(parents=True,exist_ok=True)
     for name,frame in [('quote_resolutions',resolutions),('order_outcomes',order_actions),('fill_markouts',markouts)]:
         if len(frame):frame.to_parquet(out/f'{name}.parquet',index=False,compression='zstd')
-    report=root/'issue8_report';report.mkdir(parents=True,exist_ok=True)
+    report = root / "reports" / "issue8_report";report.mkdir(parents=True,exist_ok=True)
     resolution_summary.to_csv(report/f'resolution_summary_{day}.csv',index=False)
     mark_summary.to_csv(report/f'markout_summary_{day}.csv',index=False)
     quality.to_csv(report/f'data_quality_{day}.csv',index=False)

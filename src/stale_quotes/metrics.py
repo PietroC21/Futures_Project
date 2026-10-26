@@ -553,7 +553,7 @@ def run(dates, events: str, processed_dir: Path = config.PROCESSED_DIR,
     for trading_date in dates:
         paths = {k: Path(processed_dir) / k / f"{trading_date:%Y%m%d}.parquet" for k in ["stale", "latency"]}
         if recompute or not all(p.exists() for p in paths.values()):
-            stale, latency = compute_for_date(trading_date, Path(events.format(date=trading_date.isoformat())))
+            stale, latency = compute_for_date(trading_date,Path(events.format(date=trading_date.strftime("%Y%m%d"))))
             for kind, table in zip(["stale", "latency"], [stale, latency]):
                 paths[kind].parent.mkdir(parents=True, exist_ok=True)
                 table.to_parquet(paths[kind], index=False)
@@ -565,8 +565,7 @@ def run(dates, events: str, processed_dir: Path = config.PROCESSED_DIR,
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Latency, opportunity, duration and edge results (issue #7).")
     parser.add_argument("--dates", nargs="+", type=date.fromisoformat, default=config.STUDY_DATES)
-    parser.add_argument("--events", default="issue4_report/{date}/events.parquet",
-                        help="events parquet path with a {date} placeholder (YYYY-MM-DD)")
+    parser.add_argument("--events", default="data/processed/events/{date}/events.parquet", help="Events Parquet path with {date} placeholder (YYYYMMDD)")
     parser.add_argument("--results-dir", type=Path, default=config.ROOT_DIR / "results")
     parser.add_argument("--recompute", action="store_true", help="ignore cached per-date tables")
     args = parser.parse_args(argv)
