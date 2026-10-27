@@ -271,7 +271,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--dates", nargs="+", type=date.fromisoformat, default=config.STUDY_DATES)
     parser.add_argument("--events", required=True,
                         help="events parquet path with a {date} placeholder (YYYY-MM-DD), "
-                             "e.g. issue4_report/{date}/events.parquet")
+                             "e.g. data/processed/events/20261007/events.parquet")
     parser.add_argument("--out-dir", type=Path, default=config.PROCESSED_DIR / "stale")
     args = parser.parse_args(argv)
 

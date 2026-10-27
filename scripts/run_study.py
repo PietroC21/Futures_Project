@@ -2,7 +2,8 @@
 
     python scripts/download.py                       # once, caches data/raw/
     python scripts/run_study.py                      # config.STUDY_DATES
-    python scripts/run_study.py --dates 2026-10-07 --events "issue4_report/{date}/events.parquet"
+    python scripts/run_study.py --dates 2026-10-07 \
+    --events "data/processed/events/{date}/events.parquet"
 
 Per-date stale-quote and latency tables are cached in data/processed/{stale,latency}/;
 pass --recompute to rebuild them. Tables go to results/tables/, figures to results/figures/.
