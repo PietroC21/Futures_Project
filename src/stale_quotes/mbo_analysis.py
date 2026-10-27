@@ -29,7 +29,7 @@ def normalize_mbo(frame: pd.DataFrame) -> pd.DataFrame:
         raise ValueError(f'MBO missing fields: {sorted(missing)}')
     if 'sequence' not in df: df['sequence'] = np.arange(len(df), dtype=np.int64)
     if 'flags' not in df: df['flags'] = 0
-    df['_ns'] = pd.to_datetime(df.ts_event,utc=True).astype('int64')
+    df['_ns'] = pd.to_datetime(df.ts_event,utc=True).dt.as_unit('ns').astype('int64')
     # Input order is authoritative for equal timestamps; sequence is used when present.
     df['_position'] = np.arange(len(df))
     return df.sort_values(['_ns','sequence','_position'],kind='stable').reset_index(drop=True)
@@ -172,7 +172,7 @@ def markouts_from_bbo(fills:pd.DataFrame,bbo:pd.DataFrame,*,horizons_ms=MARKOUT_
     if 'mid' not in q:
         if {'bid','ask'}.issubset(q.columns):q['mid']=(q.bid+q.ask)/2
         else:q['mid']=(q.bid_px_00+q.ask_px_00)/2
-    q['_ns']=pd.to_datetime(q.ts_event,utc=True).astype('int64')
+    q['_ns']=pd.to_datetime(q.ts_event,utc=True).dt.as_unit('ns').astype('int64')
     out=[]
     for inst,part in fills.groupby('instrument_id'):
         qs=q[q.instrument_id.eq(inst)].sort_values('_ns'); times=qs._ns.to_numpy();mids=qs.mid.to_numpy(float)

@@ -43,7 +43,7 @@ Detailed results and methodological notes are available in [Issue 4](reports/iss
 
 ## Reproduce the analysis (setup and commands)
 
-The instructions below are **not part of the 500–800-word research overview**. Run commands from the repository root. The large Databento DBN downloads and generated Parquet datasets are intentionally **not committed to GitHub**; the smaller CSV reports and PNG figures are committed so results can be inspected without re-downloading market data.
+The instructions below are **not part of the 500–800-word research overview**. Run commands from the repository root. The large Databento market-data downloads and generated Parquet datasets are intentionally **not committed to GitHub**. Only the daily instrument-definition files (`data/raw/definitions/`, reused to select contracts), the MBP-1 request manifests, and the CSV reports and PNG figures are committed, so results can be inspected without re-downloading market data.
 
 ### 1. Environment and data access
 
