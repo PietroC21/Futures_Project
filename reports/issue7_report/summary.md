@@ -219,7 +219,7 @@ The core analytical logic lives in reusable Python modules rather than the noteb
 |---|---|
 | `src/stale_quotes/metrics.py` | Reaction latency, opportunity frequency, duration and edge summaries, status diagnostics, Kaplan–Meier estimates, grouped results and figures |
 | `scripts/run_study.py` | Runs the daily stale-quote and latency analysis, caches results, and generates aggregate outputs |
-| `notebooks/results.ipynb` | Loads and displays saved tables and figures |
+| `notebooks/issue7_results.ipynb` | Loads and displays saved tables and figures |
 | `tests/test_metrics.py` | Unit and integration tests, including censored Kaplan–Meier cases |
 
 The pipeline uses the following intermediate outputs:
@@ -255,7 +255,7 @@ data/processed/events/YYYYMMDD/events.parquet
 
 Older branches used the obsolete `issue4_report/{date}/events.parquet` default.
 
-After the run completes, execute `notebooks/results.ipynb` to display the results.
+After the run completes, execute `notebooks/issue7_results.ipynb` to display the results.
 
 The tables and figures included alongside this report are stored under:
 
